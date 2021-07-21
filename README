@@ -1,0 +1,32 @@
+Buzera Tiberiu 323CA
+
+Taskul1:
+Pentru taskul 1 am deschis cu ghidra binarul nice, am cautat functia main si
+am inceput sa analizez functiile din aceasta. In cea dea 3 a functie am 
+observat ca programul citeste mai multe date din fisier decat are alocat 
+buffer-ul, corupand memoria de dupa buffer, prim urmare avem de-a face cu un
+buffer-overflow la functia cu adresa : 0804930c.
+
+Taskul2:
+Pentru taskul 2, pentru afisarea flagului am verificat functiile de dinaintea 
+celei vulnerabile si le-am adunat cata memorie din buffer au folosit, la care
+am mai adaugat marimea buffer-ului functiei vulnerabile, plus 4 adresa de return,
+obtinand 423 de caractere + adresa print flagului (08049291).
+
+Falgul gasit pentru binarul nice este:
+NICE_FLAG{336a17a948e70b44c45320c9fe6e6e93}
+
+Taskul3:
+Pentru taskul 3 am folosit din nou ghidra pe binarul naughty, am cautat functia 
+main unde am analizat pe rand functiile. Toate functiile citesc mai multe date
+decat au alocat in buffer, prin urmare avem buffer-overflow.
+Prima functie de la adresa 080492de are un parametru ce poate fi suprascris 
+pentru a modifica adresa de return (sa intoarca valoarea 0) si a nu mai intra in
+celelalte functii.
+Astfel payload-ul este format din 128 de caractere (lungimea buffer-ului), adresa 
+din if (pentru a fi siguri ca nu se intra in el), numarul de caractere ramase 
+pana la numarul de caractere care se citesc din fisier, plus adresa print 
+flagului.
+
+Flagul gasit pentru binarul naughty este:
+NAUGHTY_FLAG{9727e90c387c87bfe80f22ba1733defe}
